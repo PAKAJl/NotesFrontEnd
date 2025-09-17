@@ -1,10 +1,44 @@
 const container = document.querySelector(".notes");
 const noteTemplate = document.querySelector(".note");
 
+
+const form = document.querySelector(".form")
+form.addEventListener('submit', async function (e){
+    e.preventDefault();
+    const input = document.querySelector('#noteText')
+    
+    let newNote = {
+        text : input.value.trim(),
+        isCompleted : 0
+    }
+    console.log(JSON.stringify(newNote))
+    try {
+        const response = await fetch("http://localhost:3000/api/notes", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newNote) // отправляем JSON
+        })
+        if (!response.ok) {
+            throw new Error(`Ошибка: ${response.status}`);
+        }
+        const result = await response.json();
+        console.log('Заметка создана:', result);
+        input.value = '';
+        getNotes()
+    } catch (error) {
+        console.error('Ошибка при отправке:', error);
+    }
+    
+})
+
 function renderNotes(notes) {
+    container.innerHTML = ""
     notes.forEach(item => {
         // Клонируем шаблон
         const newNote = noteTemplate.cloneNode(true);
+        
         newNote.setAttribute("class", "note");
         // Заполняем текст
         newNote.querySelector(".note__text").textContent = item.info.text;

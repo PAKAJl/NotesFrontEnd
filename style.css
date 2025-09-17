@@ -65,8 +65,26 @@ h1{
     box-shadow: 0 0 15px #838383;
     width: 600px;
     margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .hidden{
     display: none;
+}
+
+.note__check{
+    margin-right: 10px;
+}
+
+.note__left{
+    display: flex;
+    align-items: center;
+}
+.note__delete{
+    padding: 10px;
+    width: 20px;
+    background-color: #d50000;
+    border-radius: 10px;
 }

@@ -1,0 +1,50 @@
+/* Контейнер */
+.checkbox-wrapper {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+  user-select: none;
+}
+
+/* Скрываем стандартный чекбокс */
+.checkbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Внешний вид кастомного чекбокса */
+.checkbox-custom {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #ccc;
+  border-radius: 6px; /* можно сделать 50% для круга */
+  margin-right: 8px;
+  background-color: #fff;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Галочка */
+.checkbox-custom::after {
+  content: "";
+  width: 6px;
+  height: 12px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) scale(0);
+  transition: transform 0.2s ease;
+}
+
+/* Состояние checked */
+.checkbox:checked + .checkbox-custom {
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+}
+
+.checkbox:checked + .checkbox-custom::after {
+  transform: rotate(45deg) scale(1);
+}

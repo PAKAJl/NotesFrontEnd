@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="checkboxes.css">
 </head>
 <body>
     <header>
@@ -17,7 +18,14 @@
 
     <section class="notes">
         <div class="note hidden">
-            <p class="note__text">Какой то текст</p>
+            <div class="note__left">
+                <label class="checkbox-wrapper">
+                    <input class="note__check checkbox" type="checkbox" name="competeStatus" id="">
+                    <span class="checkbox-custom"></span>
+                </label>
+                <p class="note__text">Какой то текст</p>
+            </div>
+            <img class="note__delete" src="/Resurces/icons8-мусор-48.png" alt="Кнопка удаления">
         </div>
     </section>
     <script src="script.js"></script>

@@ -7,9 +7,12 @@ function renderNotes(notes) {
         const newNote = noteTemplate.cloneNode(true);
         newNote.setAttribute("class", "note");
         // Заполняем текст
-        newNote.querySelector(".note__text").textContent = item.note.text;
+        newNote.querySelector(".note__text").textContent = item.info.text;
         // Ставим id
         newNote.setAttribute("id", item.id);
+        newNote.querySelector(".note__delete").addEventListener("click", () => {
+            deleteNote(item.id);
+        })
         // Добавляем в контейнер
         container.appendChild(newNote);
     });
@@ -31,3 +34,22 @@ function getNotes() {
 }
 
 getNotes();
+
+function deleteNote(noteId){
+    fetch("http://localhost:3000/api/notes/"+noteId, {
+            method : 'DELETE'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Ошибка: ${response.status}`);
+            }
+            return response.json(); // или response.text(), если сервер не возвращает JSON
+        })
+        .then(data => {
+            console.log('Удалено успешно:', data);
+            document.getElementById(`${noteId}`).classList.add("hidden")
+        })
+        .catch(error => {
+            console.error('Ошибка при удалении:', error);
+        })
+}

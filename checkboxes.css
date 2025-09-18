@@ -28,6 +28,10 @@
   justify-content: center;
 }
 
+.checkbox-custom:hover{
+  box-shadow: 0 0 15px #4CAF50;
+}
+
 /* Галочка */
 .checkbox-custom::after {
   content: "";
@@ -48,3 +52,4 @@
 .checkbox:checked + .checkbox-custom::after {
   transform: rotate(45deg) scale(1);
 }
+

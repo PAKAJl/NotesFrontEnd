@@ -40,15 +40,25 @@ function renderNotes(notes) {
         const newNote = noteTemplate.cloneNode(true);
         
         newNote.setAttribute("class", "note");
-        // Заполняем текст
-        newNote.querySelector(".note__text").textContent = item.info.text;
         // Ставим id
         newNote.setAttribute("id", item.id);
-        newNote.querySelector(".note__delete").addEventListener("click", () => {
-            deleteNote(item.id);
-        })
+        
         // Добавляем в контейнер
         container.appendChild(newNote);
+
+        newNote.querySelector(".note__delete").addEventListener("click", () => deleteNote(item.id))
+        newNote.querySelector(".edit__button").addEventListener("click", () => updateNote(item.id))
+
+        const label = newNote.querySelector(".note__text")
+        const labelEdit = newNote.querySelector(".note__edit")
+        console.log(item)
+        label.textContent = item.info.text;
+        newNote.querySelector("#textEdit").value = item.info.text;
+
+        label.addEventListener("click", () => {
+            label.classList.add("hidden")
+            labelEdit.classList.remove("hidden");
+        })
     });
 }
 
@@ -86,4 +96,45 @@ function deleteNote(noteId){
         .catch(error => {
             console.error('Ошибка при удалении:', error);
         })
+}
+
+async function updateNote(id){
+    const note = document.getElementById(`${id}`)
+    console.log(id)
+    const newText = note.querySelector(`#textEdit`).value
+    let oldText = note.querySelector(".note__text").textContent
+
+    if (newText == oldText){
+        console.log("Текст не изменился")
+        return
+    }
+
+    try {
+    const response = await fetch(`http://localhost:3000/api/notes/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        text: newText,
+        isCompleted: 0 // Сделать реализацию чекбокса
+      })
+    })
+    
+
+    if (!response.ok) {
+      throw new Error(`Ошибка: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log('Заметка обновлена:', result);
+
+    note.querySelector(".note__text").textContent = newText
+    console.log(oldText)
+    console.log(newText)
+    note.querySelector(".note__text").classList.remove("hidden")
+    note.querySelector(".note__edit").classList.add("hidden")
+  } catch (err) {
+    console.error('Ошибка при обновлении:', err);
+  }
 }

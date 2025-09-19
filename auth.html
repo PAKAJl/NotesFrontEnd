@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="checkboxes.css">
+    <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+    <header>
+        <h1>Notes Project</h1>
+        <div class="header__buttons">
+            <a class="header__button button" href="/index.html">Notes</a>
+            <a class="header__button button" href="#">Sign In</a>
+        </div>
+    </header>
+
+    <section class="auth">
+        <form class="auth__form" action="">
+            <h1 class="auth__header">Вход</h1>
+            <label class="auth__label" for="Username">User Name</label>
+            <input id="username" class="text-input auth__username" type="text" name="Username" required placeholder="MyLogin">
+            <label class="auth__label" for="Password">Password</label>
+            <input id="password" class="text-input auth__password" type="password" name="Password" required placeholder="*********">
+            <div class="auth__container">
+                <input class="auth__button button" type="submit" value="Log In">
+                <p class="register-link">Not have account?</p>
+            </div>
+            
+        </form>
+    </section>
+    
+    <script src="script.js"></script>
+</body>
+</html>

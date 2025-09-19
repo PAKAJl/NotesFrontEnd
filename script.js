@@ -51,10 +51,23 @@ function renderNotes(notes) {
 
         const label = newNote.querySelector(".note__text")
         const labelEdit = newNote.querySelector(".note__edit")
-        console.log(item)
+        const checkbox = newNote.querySelector(".note__check")
+        checkbox.addEventListener("click", function(){
+            if (this.checked){
+                newNote.classList.add("completed-note");
+            } else{
+                newNote.classList.remove("completed-note");
+            }
+            updateNote(item.id)
+        })
         label.textContent = item.info.text;
         newNote.querySelector("#textEdit").value = item.info.text;
-
+        checkbox.checked = item.info.isCompleted
+        if (checkbox.checked){
+                newNote.classList.add("completed-note");
+            } else{
+                newNote.classList.remove("completed-note");
+            }
         label.addEventListener("click", () => {
             label.classList.add("hidden")
             labelEdit.classList.remove("hidden");
@@ -103,11 +116,7 @@ async function updateNote(id){
     console.log(id)
     const newText = note.querySelector(`#textEdit`).value
     let oldText = note.querySelector(".note__text").textContent
-
-    if (newText == oldText){
-        console.log("Текст не изменился")
-        return
-    }
+    const checkBox = note.querySelector(".note__check")
 
     try {
     const response = await fetch(`http://localhost:3000/api/notes/${id}`, {
@@ -117,7 +126,7 @@ async function updateNote(id){
       },
       body: JSON.stringify({
         text: newText,
-        isCompleted: 0 // Сделать реализацию чекбокса
+        isCompleted:  checkBox.checked// Сделать реализацию чекбокса
       })
     })
     
